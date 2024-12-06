@@ -50,7 +50,7 @@ export default function UserInfoForm() {
       let index = 0;
       const interval = setInterval(() => {
         if (index < output.length) {
-          setDisplayedOutput((prev) => prev + output[index]);
+          if (output[index]) setDisplayedOutput((prev) => prev + output[index]);
           index++;
         } else {
           clearInterval(interval); // Arrêter l'intervalle lorsque tout le texte est affiché
