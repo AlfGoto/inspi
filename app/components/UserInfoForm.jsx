@@ -199,11 +199,11 @@ export default function UserInfoForm() {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <FormControl fullWidth>
-                <InputLabel id="words-label">Length</InputLabel>
+                <InputLabel id="words-label">Message Length</InputLabel>
                 <Select
                   labelId="words-label"
                   value={words}
-                  label="Length"
+                  label="Message Length"
                   onChange={(e) => setWords(e.target.value)}
                   MenuProps={{ disableScrollLock: true }}
                 >
@@ -254,23 +254,6 @@ export default function UserInfoForm() {
           />
 
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={9}>
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                sx={{
-                  backgroundColor: "primary.main",
-                  "&:hover": {
-                    backgroundColor: "primary.dark",
-                    transform: "translateY(-2px)",
-                  },
-                  transition: "all 0.3s ease",
-                }}
-              >
-                Submit
-              </Button>
-            </Grid>
             <Grid item xs={3}>
               <FormControl fullWidth>
                 <InputLabel id="language-label">Language</InputLabel>
@@ -291,6 +274,23 @@ export default function UserInfoForm() {
                   ))}
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item xs={9}>
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{
+                  backgroundColor: "primary.main",
+                  "&:hover": {
+                    backgroundColor: "primary.dark",
+                    transform: "translateY(-2px)",
+                  },
+                  transition: "all 0.3s ease",
+                }}
+              >
+                Submit
+              </Button>
             </Grid>
           </Grid>
         </Box>
