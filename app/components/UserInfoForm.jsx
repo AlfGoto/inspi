@@ -35,7 +35,7 @@ export default function UserInfoForm() {
   const [city, setCity] = useState("");
   const [gender, setGender] = useState("female");
   const [additionalInfo, setAdditionalInfo] = useState("");
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("English");
   const [output, setOutput] = useState("");
   const [displayedOutput, setDisplayedOutput] = useState("");
   const [openHobbies, setOpenHobbies] = useState(false);
@@ -63,25 +63,44 @@ export default function UserInfoForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch("/api/process-info", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        hobbies,
-        age,
-        city,
-        gender,
-        additionalInfo,
-        language,
-      }),
-    });
-    let data = await response.text();
-    data = data.replaceAll("\\n", "").replaceAll('"', "");
-    console.log(data);
-    setOutput(data);
-    setDisplayedOutput("");
+    try {
+      const response = await fetch("/api/process-info", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          hobbies,
+          age,
+          city,
+          gender,
+          additionalInfo,
+          language,
+          words,
+          name,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur dans la réponse de l'API");
+      }
+
+      let data = await response.text();
+      if (!data) {
+        throw new Error("Réponse vide");
+      }
+
+      data = data
+        .replaceAll("\\n", "")
+        .replaceAll('"', "")
+        .replaceAll("\\", "");
+      setOutput(data);
+      setDisplayedOutput("");
+    } catch (error) {
+      console.error("Erreur:", error);
+      setOutput("Une erreur s'est produite, veuillez réessayer.");
+      setDisplayedOutput("");
+    }
   };
 
   const copyToClipboard = () => {
@@ -190,8 +209,8 @@ export default function UserInfoForm() {
                 >
                   {[
                     { name: "Short", words: 5 },
-                    { name: "Mid", words: 30 },
-                    { name: "Long", words: 60 },
+                    { name: "Mid", words: 20 },
+                    { name: "Long", words: 40 },
                   ].map((num) => (
                     <MenuItem key={num.name} value={num.words}>
                       {num.name}
@@ -263,7 +282,7 @@ export default function UserInfoForm() {
                   MenuProps={{ disableScrollLock: true }}
                 >
                   {languages.map((lang) => (
-                    <MenuItem key={lang.code} value={lang.code}>
+                    <MenuItem key={lang.code} value={lang.name}>
                       <Box component="span" mr={1}>
                         {lang.flag}
                       </Box>

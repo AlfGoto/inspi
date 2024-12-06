@@ -2,17 +2,31 @@ import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
 export async function POST(request: Request) {
-  const { hobbies, age, city, gender, additionalInfo, language, words, name } =
+  let { hobbies, age, city, gender, additionalInfo, language, words, name } =
     await request.json();
 
-  const result = await model.generateContent(
-    `Give me only the first message (close to ${words} words) i can send to ${name}, ${gender}, ${age}yo with those infos and respond in ${language} infos : ${JSON.stringify(
-      [hobbies, city, additionalInfo]
-    )}`
-  );
+  if (!name) {
+    name = ",";
+  } else {
+    name = `${name},`;
+  }
+  if (gender === "other") {
+    gender = ",";
+  } else {
+    gender = `${gender},`;
+  }
+  let prompt = `Create a first message for a meeting app, keeping it around ${words} words. Please incorporate the following details:  the person i'm sending this is ${name} ${gender} ${age}yo in ${language}`;
+  if (hobbies.length > 0)
+    prompt += " and their hobbies are " + JSON.stringify(hobbies);
+  if (city.length > 0) prompt += " live in " + city;
+  if (additionalInfo.length > 0)
+    prompt += " additionnals infos : " + additionalInfo;
+
+  console.log(prompt);
+  const result = await model.generateContent(prompt);
 
   console.log(result.response);
 
