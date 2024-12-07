@@ -55,7 +55,7 @@ export default function UserInfoForm() {
         } else {
           clearInterval(interval); // Arrêter l'intervalle lorsque tout le texte est affiché
         }
-      }, 2);
+      }, 5);
 
       return () => clearInterval(interval); // Nettoyer l'intervalle lors du changement de l'effet
     }
@@ -198,6 +198,42 @@ export default function UserInfoForm() {
 
           <Grid container spacing={2}>
             <Grid item xs={6}>
+              <TextField
+                label="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <InputLabel id="gender-label">Gender</InputLabel>
+                <Select
+                  labelId="gender-label"
+                  value={gender}
+                  label="Gender"
+                  onChange={(e) => setGender(e.target.value)}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+
+          <TextField
+            label="Additional Information"
+            value={additionalInfo}
+            onChange={(e) => setAdditionalInfo(e.target.value)}
+            multiline
+            rows={4}
+            fullWidth
+          />
+
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel id="words-label">Message Length</InputLabel>
                 <Select
@@ -221,41 +257,6 @@ export default function UserInfoForm() {
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth>
-                <InputLabel id="gender-label">Gender</InputLabel>
-                <Select
-                  labelId="gender-label"
-                  value={gender}
-                  label="Gender"
-                  onChange={(e) => setGender(e.target.value)}
-                  MenuProps={{ disableScrollLock: true }}
-                >
-                  <MenuItem value="male">Male</MenuItem>
-                  <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-
-          <TextField
-            label="City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            fullWidth
-          />
-
-          <TextField
-            label="Additional Information"
-            value={additionalInfo}
-            onChange={(e) => setAdditionalInfo(e.target.value)}
-            multiline
-            rows={4}
-            fullWidth
-          />
-
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={3}>
-              <FormControl fullWidth>
                 <InputLabel id="language-label">Language</InputLabel>
                 <Select
                   labelId="language-label"
@@ -275,24 +276,22 @@ export default function UserInfoForm() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={9}>
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                sx={{
-                  backgroundColor: "primary.main",
-                  "&:hover": {
-                    backgroundColor: "primary.dark",
-                    transform: "translateY(-2px)",
-                  },
-                  transition: "all 0.3s ease",
-                }}
-              >
-                Submit
-              </Button>
-            </Grid>
           </Grid>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{
+              backgroundColor: "primary.main",
+              "&:hover": {
+                backgroundColor: "primary.dark",
+                transform: "translateY(-2px)",
+              },
+              transition: "all 0.3s ease",
+            }}
+          >
+            Submit
+          </Button>
         </Box>
       </form>
 
