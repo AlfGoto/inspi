@@ -93,7 +93,8 @@ export default function UserInfoForm() {
       data = data
         .replaceAll("\\n", "")
         .replaceAll('"', "")
-        .replaceAll("\\", "");
+        .replaceAll("\\", "")
+        .replaceAll("undefined", "");
       setOutput(data);
       setDisplayedOutput("");
     } catch (error) {
